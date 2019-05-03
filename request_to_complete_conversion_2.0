@@ -1,0 +1,12 @@
+
+SELECT passenger_lyft_id AS user_lyft_id,
+     START_AT as occurred_at,
+CASE WHEN rides_dropped_off_cnt > 0 THEN 1 END AS metric_numerator,
+CASE WHEN rides_requested_cnt > 0 THEN 1 END AS metric_denominator
+    FROM core.all_pax_sessions
+   WHERE ds >= 'xxxxxxxxx'
+     AND is_valid_session = TRUE
+     AND passenger_lyft_id IS NOT NULL
+
+
+
