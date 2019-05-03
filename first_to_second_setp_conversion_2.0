@@ -2,8 +2,8 @@
 
 SELECT s.passenger_lyft_id AS user_lyft_id,
     s.START_AT as occurred_at,
-    COUNT(DISTINCT(CASE WHEN (s.set_destination_cnt > 0 AND (is_x = FALSE OR is_x IS NULL)) OR (s.set_pickup_cnt > 0 AND is_x = TRUE) OR (b.event_id IS NOT NULL AND is_x = TRUE) THEN s.session_id END)) AS metric_numerator,
-    COUNT(DISTINCT(CASE WHEN (s.set_destination_cnt > 0 AND is_x = TRUE) OR (s.set_pickup_cnt > 0 AND (is_x = FALSE OR is_x IS NULL)) THEN s.session_id END)) AS metric_denominator
+    CASE WHEN (s.set_destination_cnt > 0 AND (is_x = FALSE OR is_x IS NULL)) OR (s.set_pickup_cnt > 0 AND is_x = TRUE) OR (b.event_id IS NOT NULL AND is_x = TRUE) THEN 1 else 0 END AS metric_numerator,
+    CASE WHEN (s.set_destination_cnt > 0 AND is_x = TRUE) OR (s.set_pickup_cnt > 0 AND (is_x = FALSE OR is_x IS NULL)) THEN 1 else 0 END AS metric_denominator
 FROM core.all_pax_sessions s
 LEFT JOIN pax_events_annotated.event_client_action b
 ON b.session_id = s.session_id
@@ -13,7 +13,6 @@ ON b.session_id = s.session_id
 WHERE s.ds >= 'xxxxxxxx'
     AND s.is_valid_session = TRUE
     AND s.passenger_lyft_id IS NOT NULL
-GROUP BY 1,2
 
 
 
