@@ -6,7 +6,7 @@ SELECT s.user_lyft_id,
 FROM hive.redshift.dimension_session_stats s
 LEFT JOIN hive.default.fact_client_events_sessionized b 
 ON b.session_id = s.session_id
-    AND client_event_name = 'set_ride_type'
+    AND client_event_name = 'confirm_mode'
     AND result = 'success'
     AND b.ds >= 'xxxxxxxxx'
 WHERE s.ds >= 'xxxxxxxxx'
