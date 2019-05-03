@@ -4,7 +4,7 @@ SELECT passenger_lyft_id AS user_lyft_id,
     count(distinct (CASE WHEN (s.set_destination_cnt > 0 AND is_x = TRUE) OR (s.set_pickup_cnt > 0 AND (is_x = FALSE OR is_x IS NULL)) THEN s.session_id END) ) AS metric_numerator,
     count(distinct s.session_id) AS metric_denominator
 FROM core.all_pax_sessions s
-WHERE s.ds >= '2019-04-18'
+WHERE s.ds >= 'xxxxxxxxxxx'
     AND is_valid_session = TRUE
     AND passenger_lyft_id IS NOT NULL
 group by 1,2
