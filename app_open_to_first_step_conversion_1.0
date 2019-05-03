@@ -1,0 +1,8 @@
+SELECT s.user_lyft_id,
+       s.started_at AS occurred_at,
+CASE WHEN s.destinations_set > 0 THEN 1 else 0 END AS metric_numerator,
+1 AS metric_denominator
+FROM hive.redshift.dimension_session_stats s
+WHERE s.valid_pax_session = TRUE
+AND s.user_lyft_id IS NOT NULL
+AND s.ds >= '2019-04-18'
