@@ -1,0 +1,20 @@
+
+
+SELECT s.user_lyft_id,
+    s.STARTed_AT as occurred_at,
+    count(distinct(CASE WHEN s.num_rides_requested > 0 THEN s.session_id END)) AS metric_numerator,
+    COUNT(DISTINCT(CASE WHEN (s.pickups_set > 0) or (b.event_id IS NOT NULL) THEN s.session_id END)) AS metric_denominator
+FROM hive.redshift.dimension_session_stats s
+LEFT JOIN hive.default.fact_client_events_sessionized b
+ON b.session_id = s.session_id
+    AND client_event_name = 'set_ride_type'
+    AND result = 'success'
+    AND b.ds >= 'xxxxxxx'
+WHERE s.ds >= 'xxxxxx'
+    AND  s.valid_pax_session = TRUE
+    AND s.user_lyft_id IS NOT NULL
+GROUP BY 1,2
+   
+   
+   
+   
