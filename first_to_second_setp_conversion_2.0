@@ -7,7 +7,7 @@ SELECT s.passenger_lyft_id AS user_lyft_id,
 FROM core.all_pax_sessions s
 LEFT JOIN pax_events_annotated.event_client_action b
 ON b.session_id = s.session_id
-    AND b.action = 'set_ride_type'
+    AND b.action = 'confirm_mode'
     AND b.result = 'success'
     AND b.ds >= 'xxxxxxx'
 WHERE s.ds >= 'xxxxxxxx'
